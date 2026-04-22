@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ERHL</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+  <div id="navbar"></div>
+
+  <main>
+    <section class="hero hero-carousel-wrapper">
+      <div id="heroCarousel" class="carousel carousel-fade hero-carousel" data-bs-interval="4000" data-bs-ride="carousel">
+        <!-- Carousel slides with rotating images and content -->
+        <div class="carousel-inner">
+          <!-- Slide 1 -->
+          <div class="carousel-item active" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.52), rgba(18, 41, 29, 0.72)), url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
+            <div class="hero-slide-content">
+              <p class="text-uppercase text-white-50 mb-3">Environmental restoration</p>
+              <h1 class="hero-title">Environment Restoration<br>and Healthy Living</h1>
+              <p class="hero-subtitle">Restoring nature, inspiring healthy living</p>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="carousel-item" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.52), rgba(18, 41, 29, 0.72)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
+            <div class="hero-slide-content">
+              <p class="text-uppercase text-white-50 mb-3">Forest conservation</p>
+              <h1 class="hero-title">Protecting Our<br>Forests Together</h1>
+              <p class="hero-subtitle">Join in preserving vital ecosystems</p>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="carousel-item" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.52), rgba(18, 41, 29, 0.72)), url('https://images.unsplash.com/photo-1559027615-cd2628902d4a?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
+            <div class="hero-slide-content">
+              <p class="text-uppercase text-white-50 mb-3">Sustainable living</p>
+              <h1 class="hero-title">Building a Sustainable<br>Future for All</h1>
+              <p class="hero-subtitle">Innovative solutions for a greener planet</p>
+            </div>
+          </div>
+        </div>  
+
+        <!-- Carousel indicators -->
+        <div class="hero-indicators">
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+
+        <!-- Carousel controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+      <!-- Static buttons overlay -->
+      <div class="hero-static-content">
+        <div class="hero-buttons">
+          <a href="about.html" class="btn btn-outline-light">Learn More</a>
+         <a href="get-involved.html" class="btn btn-success">Volunteer</a>
+
+
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section-wrapper">
+      <div class="container">
+        <div class="row align-items-start gy-4">
+          <div class="col-lg-6">
+            <div class="about-text">
+              <h2>About Us</h2>
+              <p>Environmental Restoration and Healthy Living (ERHL) is dedicated to restoring the natural environment and promoting healthy lifestyles through sustainable practices, organic agriculture, clean energy initiatives, and community education programs.</p>
+              <p>We believe that environmental health and human health are interconnected. Our work focuses on creating sustainable solutions that benefit both the planet and its inhabitants.</p>
+              <p>For over 5 years, we've been working on the frontlines of environmental conservation, partnering with communities to create lasting positive change. Our integrated approach combines environmental restoration with health advocacy to ensure holistic benefits for people and planet.</p>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="row gy-3">
+              <div class="col-12">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Forest restoration" class="about-image-large img-fluid rounded">
+              </div>
+              <div class="col-6">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=400&q=80" alt="Organic farming" class="about-small-image img-fluid rounded">
+              </div>
+              <div class="col-6">
+                <div class="years-card">
+                  <span class="text-primary fw-bold fs-1">5+</span>
+                  <p class="mb-0">Years of Impact</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="values" class="bg-soft">
+      <div class="container section-wrapper">
+        <div class="section-title">
+          <h2>Our Core Values</h2>
+          <p>We are guided by principles that ensure our work creates lasting positive change</p>
+        </div>
+        <div class="values-carousel-container">
+          <button class="carousel-nav-btn carousel-nav-prev" id="valuesPrevBtn" aria-label="Previous values">❮</button>
+          <div class="values-carousel">
+            <div class="values-carousel-inner">
+              <div class="value-card">
+                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=200&q=80');"></div>
+                <h5>Sustainability</h5>
+                <p>We implement long-term solutions that preserve resources for future generations.</p>
+              </div>
+              <div class="value-card">
+                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=200&q=80');"></div>
+                <h5>Community</h5>
+                <p>We work closely with local communities to ensure our initiatives meet real needs.</p>
+              </div>
+              <div class="value-card">
+                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80');"></div>
+                <h5>Innovation</h5>
+                <p>We embrace new technologies and approaches to solve environmental challenges.</p>
+              </div>
+              <div class="value-card">
+                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=200&q=80');"></div>
+                <h5>Transparency</h5>
+                <p>We maintain open communication and accountability in all our operations and impact reporting.</p>
+              </div>
+              <div class="value-card">
+                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1427504494785-cddc0c6eabe0?auto=format&fit=crop&w=200&q=80');"></div>
+                <h5>Education</h5>
+                <p>We empower individuals through knowledge and skills to make informed environmental decisions.</p>
+              </div>
+              <div class="value-card">
+                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1535492065543-7b964f97cd45?auto=format&fit=crop&w=200&q=80');"></div>
+                <h5>Health & Wellness</h5>
+                <p>We recognize that environmental health is directly connected to human wellbeing and quality of life.</p>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-nav-btn carousel-nav-next" id="valuesNextBtn" aria-label="Next values">❯</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section-wrapper">
+      <div class="container">
+        <div class="section-title">
+          <h2>Featured Projects</h2>
+          <p>Explore some of our active environmental and health initiatives</p>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="project-buttons" id="projectButtonsContainer">
+              <button class="btn active" data-project="energy">Clean Energy Solutions</button>
+              <button class="btn" data-project="recycling">Waste Recycling Programs</button>
+              <button class="btn" data-project="planting">Tree Planting Campaigns</button>
+              <button class="btn" data-project="health">Health Promotion</button>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="project-display">
+              <div class="project-image-container" id="projectImageContainer">
+                <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80" alt="Solar panels" class="project-image project-energy active" data-project="energy">
+                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Recycling" class="project-image project-recycling" data-project="recycling">
+                <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80" alt="Tree planting" class="project-image project-planting" data-project="planting">
+                <img src="https://images.unsplash.com/photo-1576091160550-112173f31c77?auto=format&fit=crop&w=600&q=80" alt="Health promotion" class="project-image project-health" data-project="health">
+              </div>
+              <div class="project-description mt-4" id="projectDescriptionContainer">
+                <p class="project-desc project-energy-desc active">Our clean energy solutions focus on transitioning communities to renewable power sources. We install solar panels, conduct energy efficiency audits, and provide training on sustainable energy management.</p>
+                <p class="project-desc project-recycling-desc">We implement comprehensive waste management programs that include collection, sorting, and recycling initiatives. Our goal is to reduce landfill waste by 75% in partner communities.</p>
+                <p class="project-desc project-planting-desc">Through our tree planting campaigns, we've planted over 10,000 trees in the past three years. Each tree helps combat climate change and restore local ecosystems.</p>
+                <p class="project-desc project-health-desc">Our health promotion initiatives focus on preventative care, health education, and community wellness programs. We provide free health screenings and promote active lifestyles in underserved communities.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row gy-4 mt-4" id="projectCardsContainer">
+          <div class="col-12 text-center text-muted">Loading projects...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h2>Join Our Mission</h2>
+            <p>Be part of the change. Your involvement can make a real difference in restoring our environment and promoting healthy living.</p>
+            <div class="cta-buttons">
+              <a href="#contact" class="btn btn-primary">Volunteer</a>
+              <a href="#contact" class="btn btn-outline-light">Donate</a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="cta-banner">
+              <h3>Impact Statistics</h3>
+              <p>500+ Trees Planted<br>10 Communities Served<br>50% Waste Reduction</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="news" class="section-wrapper">
+      <div class="container">
+        <div class="section-title">
+          <h2>Latest News</h2>
+          <p>Stay updated with our recent activities and achievements</p>
+        </div>
+        <div class="news-grid" id="newsCardsContainer">
+          <div class="col-12 text-center text-muted">Loading news articles...</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-wrapper">
+      <div class="container">
+        <div class="section-title">
+          <h2>Contact Us</h2>
+          <p>Get in touch to learn more about our work or how you can get involved</p>
+        </div>
+        <div class="row gy-4">
+          <div class="col-lg-6">
+            <form id="contactForm">
+              <div class="mb-3">
+                <input type="text" class="form-control" id="contactName" placeholder="Your Name" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required>
+              </div>
+              <div class="mb-3">
+                <textarea class="form-control" id="contactMessage" rows="4" placeholder="Your Message" required></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+          </div>
+          <div class="col-lg-6">
+            <div class="contact-info">
+              <p><strong>Address:</strong> 123 Green Street, Eco City, EC 12345</p>
+              <p><strong>Phone:</strong> +265 997261596</p>
+              <p><strong>Email:</strong> info@erhl.org</p>
+              <p><strong>Hours:</strong> Monday - Friday, 9 AM - 5 PM</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="footer"></div>
+
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

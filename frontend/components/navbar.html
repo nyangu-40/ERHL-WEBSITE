@@ -1,0 +1,118 @@
+<nav class="navbar navbar-expand-lg custom-navbar">
+  <div class="container">
+
+    <!-- Logo -->
+    <a class="navbar-brand" href="index.html">
+      <img src="./assets/images/logo.jpeg" alt="ERHL Logo" height="40" class="rounded-circle">
+    </a>
+
+    <!-- Toggle (ONLY visible on mobile) -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- ✅ DESKTOP MENU (unchanged) -->
+    <div class="collapse navbar-collapse justify-content-center d-none d-lg-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="projects.html">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="blog.html">News</a></li>
+        <li class="nav-item"><a class="nav-link" href="get-involved.html">Get Involved</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+<!-- ✅ MOBILE SIDE DRAWER -->
+<div class="offcanvas offcanvas-end custom-drawer d-lg-none" tabindex="-1" id="mobileMenu">
+
+  <!-- Close button -->
+  <div class="drawer-header">
+    <button type="button" class="btn-close btn-close-white ms-auto" data-bs-dismiss="offcanvas"></button>
+  </div>
+
+  <!-- Menu -->
+  <div class="drawer-body">
+    <a href="index.html" class="active">Home</a>
+    <a href="about.html">About</a>
+    <a href="projects.html">Projects</a>
+    <a href="blog.html">News</a>
+    <a href="get-involved.html">Get Involved</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+</div>
+
+<!-- ✅ CSS INSIDE SAME FILE -->
+<style>
+
+/* ===== AUTO-SIZE GLASS DRAWER ===== */
+.custom-drawer {
+  width: fit-content;              /* 👈 width depends on content */
+  min-width: 200px;                /* prevent too small */
+  max-width: 70%;                  /* safe on small screens */
+
+  background: rgba(11, 26, 43, 0.75); /* 👈 MORE transparent */
+  backdrop-filter: blur(16px);     /* glass effect */
+  -webkit-backdrop-filter: blur(16px);
+
+  border-radius: 20px 0 0 20px;
+  margin: 20px;
+  height: auto !important;
+
+  box-shadow: -10px 0 30px rgba(0,0,0,0.25);
+}
+
+/* Kill full height behavior */
+.offcanvas {
+  height: auto !important;
+  bottom: auto;
+}
+
+/* Body spacing */
+.offcanvas-body {
+  padding: 0;
+}
+
+/* Header */
+.drawer-header {
+  padding: 15px 20px;
+  display: flex;
+}
+
+/* Menu */
+.drawer-body {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 25px 20px;
+}
+
+/* Links */
+.drawer-body a {
+  color: rgba(255,255,255,0.9);
+  text-decoration: none;
+  font-size: 18px;
+  margin: 10px 0;
+  white-space: nowrap;   /* 👈 prevents wrapping → controls width */
+  transition: all 0.3s ease;
+}
+
+/* Active */
+.drawer-body a.active {
+  color: #28a745;
+}
+
+/* Hover */
+.drawer-body a:hover {
+  transform: translateX(6px);
+  color: #28a745;
+}
+
+/* Softer overlay (so hero is visible) */
+.offcanvas-backdrop.show {
+  background: rgba(0,0,0,0.2);
+}
+</style>
