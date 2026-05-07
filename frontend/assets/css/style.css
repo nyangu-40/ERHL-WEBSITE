@@ -1260,13 +1260,28 @@ footer {
   color: var(--primary);
   font-weight: bold;
 }
-
-/* WHO WE ARE */
+/* OUR FOCUS AREAS */
 .photo-card {
   background: white;
   padding: 10px;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: all 0.1s ease-in-out;
+  
+  /* Fly-in animation setup */
+  opacity: 0;
+  transform: translatex(50px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.photo-card.visible {
+  opacity: 1;
+  transform: translatex(0);
+}
+
+.photo-card:hover {
+  transform: translatex(-8px);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.12);
 }
 
 .photo-card img {
@@ -1274,8 +1289,14 @@ footer {
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
+  transition: transform 0.4s ease;
+  display: block;
+  margin: 0 auto;
 }
 
+.photo-card:hover img {
+  transform: scale(1.02);
+}
 /* MISSION */
 #mission {
   background: linear-gradient(135deg, rgba(22, 72, 33, 0.96), rgba(31, 125, 72, 0.92));

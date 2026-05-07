@@ -1,115 +1,660 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ERHL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ERHL | Our Projects - Environmental Restoration & Healthy Living</title>
+  
+  <!-- Bootstrap 5 + Icons + Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
-
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <style>
+    /* Additional styles for projects page */
+    .projects-hero {
+      height: 45vh;
+      background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      border-bottom-left-radius: 50% 20%;
+      border-bottom-right-radius: 50% 20%;
+      margin-bottom: 2rem;
+    }
+    
+    .projects-hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+    
+    .projects-hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .project-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .project-tab {
+      width: 100%;
+      padding: 1.2rem 1.5rem;
+      border-radius: 1rem;
+      border: 2px solid rgba(31, 125, 72, 0.2);
+      background: white;
+      color: #1e2f2a;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .project-tab i {
+      font-size: 1.3rem;
+      color: #1f7d48;
+      transition: all 0.3s;
+    }
+    
+    .project-tab:hover {
+      transform: translateX(8px);
+      border-color: #1f7d48;
+      background: rgba(31, 125, 72, 0.05);
+    }
+    
+    .project-tab.active {
+      background: #1f7d48;
+      color: white;
+      border-color: #1f7d48;
+      box-shadow: 0 8px 20px rgba(31, 125, 72, 0.3);
+    }
+    
+    .project-tab.active i {
+      color: white;
+    }
+    
+    .project-image-container {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      background: #1a2a20;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    .project-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .project-image.active {
+      opacity: 1;
+    }
+    
+    .project-description {
+      background: white;
+      padding: 1.8rem;
+      border-radius: 1.2rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      border-left: 4px solid #1f7d48;
+    }
+    
+    .project-detail {
+      display: none;
+    }
+    
+    .project-detail.active {
+      display: block;
+      animation: fadeInUp 0.5s ease;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .project-detail h3 {
+      color: #1f7d48;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    
+    .project-detail p {
+      color: #2c4238;
+      line-height: 1.7;
+      margin-bottom: 1rem;
+    }
+    
+    .project-detail ul {
+      padding-left: 1.2rem;
+      color: #5c6b60;
+    }
+    
+    .project-detail li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.8rem;
+      margin-top: 2rem;
+    }
+    
+    .project-card {
+      background: white;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 35px rgba(31, 125, 72, 0.15);
+    }
+    
+    .project-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+    
+    .project-card-body {
+      padding: 1.3rem;
+    }
+    
+    .project-card-body h4 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1f7d48;
+    }
+    
+    .project-card-body p {
+      color: #5c6b60;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    
+    .progress-bar-custom {
+      height: 6px;
+      background: #e0e7e0;
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 0.5rem 0;
+    }
+    
+    .progress-fill {
+      height: 100%;
+      background: #1f7d48;
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .team-card {
+      background: white;
+      border-radius: 1.2rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(31, 125, 72, 0.1);
+    }
+    
+    .team-card img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 4px solid #1f7d48;
+      padding: 3px;
+    }
+    
+    .team-card h5 {
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+      color: #1e2f2a;
+    }
+    
+    .team-card p {
+      color: #1f7d48;
+      font-weight: 600;
+      margin-bottom: 0;
+    }
+    
+    @media (max-width: 768px) {
+      .project-image-container {
+        height: 240px;
+        margin-top: 1.5rem;
+      }
+      .project-tab {
+        padding: 0.9rem 1.2rem;
+        font-size: 0.9rem;
+      }
+      .team-card img {
+        width: 120px;
+        height: 120px;
+      }
+    }
+    
+    .bg-soft {
+      background: #f0f7f2;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    
+    .section-title h2 {
+      color: #1f7d48;
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    
+    .section-title p {
+      color: #5c6b60;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .section-wrapper {
+      padding: 4rem 1.5rem;
+    }
+  </style>
 </head>
 <body>
-  <div id="navbar"></div>
 
-  <main>
-    <section class="hero">
-      <div>
-        <p class="text-uppercase text-white-50 mb-3" style="letter-spacing:0.22em;">Projects</p>
-        <h1>Projects</h1>
+<div id="navbar"></div>
+
+<main>
+  <!-- HERO SECTION -->
+  <section class="projects-hero">
+    <div data-aos="fade-up">
+      <h1>Our Projects</h1>
+      <p>Transforming communities through sustainable environmental action</p>
+    </div>
+  </section>
+
+  <!-- FEATURED PROJECTS SECTION -->
+  <section class="section-wrapper">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Milestones in Our ERHL Journey</h2>
+        <p>Explore our core project themes and click each item to reveal the full picture and description</p>
       </div>
-    
-    </section>
-
-    <section class="section-wrapper">
-      <div class="container">
-        <div class="section-title">
-          <h2>Milestones in our ERHL journey</h2>
-          <p>Explore the core project themes and click each item to reveal the full picture and description.</p>
-        </div>
-        <div class="projects-center">
-          <div class="row gy-4 align-items-start justify-content-center">
-            <div class="col-lg-4 col-xl-4">
-              <div class="project-buttons" id="projectButtonsContainer">
-                <!-- Dynamic project buttons will be loaded here from Firestore -->
-              </div>
-            </div>
-            <div class="col-lg-5 col-xl-5">
-              <div class="project-display mx-auto">
-                <div class="project-image-container" id="projectImageContainer">
-                  <!-- Dynamic project image will be loaded here -->
-                </div>
-                <div class="project-description mt-4" id="projectDescriptionContainer">
-                  <!-- Dynamic project description will be loaded here -->
-                </div>
-              </div>
+      <div class="projects-center">
+        <div class="row gy-4 align-items-start justify-content-center">
+          <div class="col-lg-4 col-xl-4" data-aos="fade-right">
+            <div class="project-buttons" id="projectButtonsContainer">
+              <!-- Dynamic project buttons -->
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-wrapper bg-soft">
-      <div class="container">
-        <div class="section-title">
-          <h2>In progress</h2>
-          <p>Current project work that is actively underway and creating impact for communities and nature.</p>
-        </div>
-        <div class="project-grid" id="projectGrid">
-          <div class="project-card">
-            <div class="project-card-body text-center text-muted">Loading current projects...</div>
+          <div class="col-lg-6 col-xl-6" data-aos="fade-left">
+            <div class="project-display mx-auto">
+              <div class="project-image-container" id="projectImageContainer">
+                <!-- Dynamic project image -->
+              </div>
+              <div class="project-description mt-4" id="projectDescriptionContainer">
+                <!-- Dynamic project description -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="section-wrapper">
-      <div class="container">
-        <div class="section-title">
-          <h2>Our Team</h2>
-          <p>The people behind the scenes bringing ERHL projects to life.</p>
-        </div>
-        <div class="team-grid">
-          <div class="team-card">
-            <img src="./assets/images/peter.jpg"  alt="Team member">
-            <h5>Peter Banda</h5>
-            <p>Program Director</p>
-          </div>
-          <div class="team-card">
-            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" alt="Team member">
-            <h5>Samuel Karanja</h5>
-            <p>Community Lead</p>
-          </div>
-          <div class="team-card">
-            <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=200&q=80" alt="Team member">
-            <h5>Leila Hassan</h5>
-            <p>Restoration Strategist</p>
-          </div>
-        </div>
+  <!-- IN PROGRESS PROJECTS SECTION -->
+  <section class="section-wrapper bg-soft">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>In Progress</h2>
+        <p>Current project work that is actively underway and creating impact for communities and nature</p>
       </div>
-    </section>
-  </main>
+      <div class="project-grid" id="projectGrid">
+        <!-- Dynamic project cards will be loaded here -->
+      </div>
+    </div>
+  </section>
 
-  <div id="footer"></div>
+  <!-- OUR TEAM SECTION -->
+  <section class="section-wrapper">
+    <div class="container">
+      <div class="section-title" data-aos="fade-up">
+        <h2>Our Team</h2>
+        <p>The dedicated people behind the scenes bringing ERHL projects to life</p>
+      </div>
+      <div class="team-grid" id="teamGrid">
+        <!-- Dynamic team members -->
+      </div>
+    </div>
+  </section>
+</main>
 
-  <script>
-    const projectTabs = document.querySelectorAll('.project-tab');
-    const projectDetails = document.querySelectorAll('.project-detail');
+<div id="footer"></div>
 
-    projectTabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        projectTabs.forEach(btn => btn.classList.remove('active'));
-        tab.classList.add('active');
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script type="module" src="assets/js/main.js"></script>
 
-        projectDetails.forEach(detail => {
-          detail.classList.toggle('active', detail.id === tab.dataset.project);
+<script>
+  // Initialize AOS
+  AOS.init({
+    duration: 800,
+    once: true,
+    offset: 60
+  });
+
+  // ========== PROJECT DATA ==========
+  const projectsData = [
+    {
+      id: "reforestation",
+      title: "Community Reforestation",
+      icon: "fas fa-tree",
+      image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
+      description: "Our flagship reforestation program works with local communities to restore degraded forest lands, combat climate change, and improve biodiversity.",
+      details: [
+        "Planted over 10,000 native trees in 2024",
+        "Trained 200+ community members in sustainable forestry",
+        "Created 3 community-managed tree nurseries",
+        "Restored 50 hectares of degraded land"
+      ],
+      impact: "85% tree survival rate, 30% increase in local biodiversity"
+    },
+    {
+      id: "clean-energy",
+      title: "Clean Energy Access",
+      icon: "fas fa-solar-panel",
+      image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=800&q=80",
+      description: "Bringing sustainable energy solutions to off-grid communities through solar installations and clean cooking technologies.",
+      details: [
+        "Installed solar panels for 150 households",
+        "Distributed 500 clean cookstoves",
+        "Trained 50 local solar technicians",
+        "Reduced kerosene use by 70% in participating communities"
+      ],
+      impact: "Carbon emissions reduced by 200 tons annually"
+    },
+    {
+      id: "waste-management",
+      title: "Waste Management & Recycling",
+      icon: "fas fa-recycle",
+      image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=800&q=80",
+      description: "Comprehensive waste reduction programs that turn trash into resources while creating economic opportunities.",
+      details: [
+        "Established 5 community recycling centers",
+        "Collected and recycled 50 tons of plastic waste",
+        "Created 30 green jobs in waste management",
+        "Launched school recycling education program"
+      ],
+      impact: "60% reduction in landfill waste in target areas"
+    },
+    {
+      id: "organic-farming",
+      title: "Organic Farming Initiative",
+      icon: "fas fa-seedling",
+      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80",
+      description: "Promoting sustainable agriculture practices that improve food security while protecting soil and water resources.",
+      details: [
+        "Trained 300+ farmers in organic techniques",
+        "Established 10 demonstration farms",
+        "Created farmer cooperatives for better market access",
+        "Reduced chemical fertilizer use by 40%"
+      ],
+      impact: "25% increase in crop yields using organic methods"
+    },
+    {
+      id: "health-wellness",
+      title: "Health & Wellness",
+      icon: "fas fa-heartbeat",
+      image: "https://images.unsplash.com/photo-1576091160550-112173f31c77?auto=format&fit=crop&w=800&q=80",
+      description: "Integrating environmental health with community wellness through education and preventive care programs.",
+      details: [
+        "Conducted 20 community health screenings",
+        "Served 2,000+ community members",
+        "Launched nutrition education workshops",
+        "Created school health clubs in 15 schools"
+      ],
+      impact: "Improved health outcomes for 5,000+ people"
+    }
+  ];
+
+  // ========== IN PROGRESS PROJECTS ==========
+  const inProgressProjects = [
+    {
+      title: "Urban Greening Project",
+      description: "Transforming urban spaces into green corridors with native trees and community gardens.",
+      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80",
+      progress: 65,
+      location: "Lilongwe City"
+    },
+    {
+      title: "Water Conservation Program",
+      description: "Implementing rainwater harvesting and water-efficient irrigation systems for smallholder farmers.",
+      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=600&q=80",
+      progress: 40,
+      location: "Rural Communities"
+    },
+    {
+      title: "Youth Environmental Leadership",
+      description: "Training the next generation of environmental leaders through hands-on conservation projects.",
+      image: "https://images.unsplash.com/photo-1559027615-cd2628902d4a?auto=format&fit=crop&w=600&q=80",
+      progress: 80,
+      location: "Nationwide"
+    }
+  ];
+
+  // ========== TEAM DATA ==========
+  const teamMembers = [
+    {
+      name: "Peter Banda",
+      role: "Founder & Executive Director",
+      image: "./assets/images/peter.jpg",
+      bio: "Chemical Engineering student leading environmental restoration efforts"
+    },
+    {
+      name: "Blessings Banda",
+      role: "Financial Manager",
+      image: "./assets/images/blessings.jpg",
+      bio: "Finance expert ensuring sustainable project funding"
+    },
+    {
+      name: "Samuel Karanja",
+      role: "Community Lead",
+      image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
+      bio: "Building strong community partnerships and engagement"
+    },
+    {
+      name: "Leila Hassan",
+      role: "Restoration Strategist",
+      image: "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=400&q=80",
+      bio: "Designing innovative ecosystem restoration strategies"
+    },
+    {
+      name: "Chipiliro Phiri",
+      role: "Project Coordinator",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+      bio: "Coordinating field operations and project implementation"
+    }
+  ];
+
+  // ========== RENDER PROJECT BUTTONS ==========
+  const buttonsContainer = document.getElementById('projectButtonsContainer');
+  const imageContainer = document.getElementById('projectImageContainer');
+  const descContainer = document.getElementById('projectDescriptionContainer');
+  
+  let activeProjectId = projectsData[0].id;
+
+  function renderProjectButtons() {
+    if (buttonsContainer) {
+      buttonsContainer.innerHTML = projectsData.map(project => `
+        <button class="project-tab ${project.id === activeProjectId ? 'active' : ''}" data-project="${project.id}">
+          <i class="${project.icon}"></i>
+          <span>${project.title}</span>
+        </button>
+      `).join('');
+      
+      // Add event listeners to buttons
+      document.querySelectorAll('.project-tab').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const projectId = btn.dataset.project;
+          setActiveProject(projectId);
         });
       });
+    }
+  }
+
+  function setActiveProject(projectId) {
+    activeProjectId = projectId;
+    const project = projectsData.find(p => p.id === projectId);
+    
+    if (project) {
+      // Update button active states
+      document.querySelectorAll('.project-tab').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.project === projectId);
+      });
+      
+      // Update image (with fade animation)
+      if (imageContainer) {
+        const existingImg = imageContainer.querySelector('.project-image');
+        if (existingImg) existingImg.remove();
+        
+        const newImg = document.createElement('img');
+        newImg.src = project.image;
+        newImg.alt = project.title;
+        newImg.className = 'project-image active';
+        newImg.style.opacity = '0';
+        imageContainer.appendChild(newImg);
+        
+        setTimeout(() => {
+          newImg.style.opacity = '1';
+        }, 50);
+      }
+      
+      // Update description
+      if (descContainer) {
+        descContainer.innerHTML = `
+          <div class="project-detail active">
+            <h3><i class="${project.icon} me-2"></i>${project.title}</h3>
+            <p>${project.description}</p>
+            <h5><i class="fas fa-check-circle me-2"></i>Key Achievements:</h5>
+            <ul>
+              ${project.details.map(detail => `<li><i class="fas fa-leaf me-2" style="color:#1f7d48;"></i>${detail}</li>`).join('')}
+            </ul>
+            <div class="mt-3 p-3 bg-light rounded">
+              <strong><i class="fas fa-chart-line me-2"></i>Impact:</strong> ${project.impact}
+            </div>
+          </div>
+        `;
+      }
+    }
+  }
+
+  // ========== RENDER IN PROGRESS PROJECTS ==========
+  const projectGrid = document.getElementById('projectGrid');
+  
+  function renderInProgressProjects() {
+    if (projectGrid) {
+      projectGrid.innerHTML = inProgressProjects.map(project => `
+        <div class="project-card" data-aos="fade-up">
+          <img src="${project.image}" alt="${project.title}">
+          <div class="project-card-body">
+            <h4>${project.title}</h4>
+            <p>${project.description}</p>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" style="width: ${project.progress}%"></div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-2">
+              <small><i class="fas fa-map-marker-alt me-1"></i> ${project.location}</small>
+              <small class="text-success fw-bold">${project.progress}% Complete</small>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+  }
+
+  // ========== RENDER TEAM SECTION ==========
+  const teamGrid = document.getElementById('teamGrid');
+  
+  function renderTeam() {
+    if (teamGrid) {
+      teamGrid.innerHTML = teamMembers.map(member => `
+        <div class="team-card" data-aos="zoom-in">
+          <img src="${member.image}" alt="${member.name}" onerror="this.src='https://placehold.co/200x200/1f7d48/white?text=${member.name.charAt(0)}'">
+          <h5>${member.name}</h5>
+          <p>${member.role}</p>
+          <small class="text-muted">${member.bio || ''}</small>
+        </div>
+      `).join('');
+    }
+  }
+
+  // Image error handling
+  function setupImageErrorHandling() {
+    const images = document.querySelectorAll('img');
+    images.forEach(img => {
+      img.onerror = function() {
+        if (!this.src.includes('placehold.co')) {
+          this.src = 'https://placehold.co/400x400/1f7d48/white?text=ERHL';
+        }
+      };
     });
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="assets/js/main.js"></script>
+  }
+
+  // Initialize everything
+  document.addEventListener('DOMContentLoaded', () => {
+    renderProjectButtons();
+    renderInProgressProjects();
+    renderTeam();
+    setupImageErrorHandling();
+    
+    // Set default active project
+    if (projectsData.length > 0) {
+      setActiveProject(projectsData[0].id);
+    }
+  });
+</script>
+
 </body>
 </html>
-```

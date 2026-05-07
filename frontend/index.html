@@ -2,263 +2,773 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ERHL</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>ERHL | Environmental Restoration & Healthy Living</title>
+  
+  <!-- Bootstrap 5 + Icons + Fonts -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Additional CSS for fully functional components */
+    
+    /* Project image transitions */
+    .project-image-container {
+      position: relative;
+      width: 100%;
+      height: 350px;
+      overflow: hidden;
+      border-radius: 1rem;
+      background: #1a2a20;
+    }
+    
+    .project-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+    
+    .project-image.active {
+      opacity: 1;
+    }
+    
+    .project-desc {
+      display: none;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #2c4238;
+    }
+    
+    .project-desc.active {
+      display: block;
+    }
+    
+    .project-buttons .btn {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 0.75rem;
+      padding: 0.85rem 1.25rem;
+      border-radius: 0.75rem;
+      border: 2px solid #1f7d48;
+      background: white;
+      color: #1e2f2a;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    
+    .project-buttons .btn:hover {
+      background: rgba(31, 125, 72, 0.08);
+      transform: translateX(4px);
+    }
+    
+    .project-buttons .btn.active {
+      background: #1f7d48;
+      color: white;
+      border-color: #1f7d48;
+    }
+    
+    /* Values Carousel Styles */
+    .values-carousel-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .values-carousel {
+      flex: 1;
+      overflow: hidden;
+      border-radius: 1rem;
+    }
+    
+    .values-carousel-inner {
+      display: flex;
+      gap: 1.5rem;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 0.5rem 0;
+    }
+    
+    .value-card {
+      flex: 0 0 calc(50% - 0.75rem);
+      background: white;
+      border-radius: 1.5rem;
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+    }
+    
+    .value-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(31, 125, 72, 0.15);
+    }
+    
+    .value-card .card-icon {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .value-card h5 {
+      color: #1f7d48;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+    
+    .value-card p {
+      color: #5c6b60;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .carousel-nav-btn {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid #1f7d48;
+      background: white;
+      color: #1f7d48;
+      font-size: 1.3rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .carousel-nav-btn:hover {
+      background: #1f7d48;
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    /* News Cards */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+      margin-top: 2rem;
+    }
+    
+    .news-card {
+      background: white;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s ease;
+    }
+    
+    .news-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(31, 125, 72, 0.12);
+    }
+    
+    .news-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .news-body {
+      padding: 1.3rem;
+    }
+    
+    .news-body h6 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1e2f2a;
+    }
+    
+    .news-date {
+      color: #1f7d48;
+      font-size: 0.8rem;
+      display: block;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    
+    .read-more-btn {
+      background: none;
+      border: none;
+      color: #1f7d48;
+      font-weight: 700;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    
+    .read-more-btn:hover {
+      text-decoration: underline;
+      transform: translateX(3px);
+    }
+    
+    .news-full-text {
+      display: none;
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid #e0e7e0;
+      font-size: 0.9rem;
+      color: #5c6b60;
+    }
+    
+    /* Project Cards */
+    .project-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .project-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .project-card-body {
+      padding: 1.2rem;
+    }
+    
+    .project-card-body h4 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #1f7d48;
+    }
+    
+    /* Contact Info */
+    .contact-info {
+      background: #f0f7f2;
+      padding: 2rem;
+      border-radius: 1rem;
+      height: 100%;
+    }
+    
+    .contact-info p {
+      margin-bottom: 1rem;
+      color: #2c4238;
+    }
+    
+    .contact-info i {
+      color: #1f7d48;
+      width: 30px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .value-card {
+        flex: 0 0 100%;
+      }
+      .project-image-container {
+        height: 250px;
+        margin-top: 1rem;
+      }
+      .carousel-nav-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+      }
+      .values-carousel-container {
+        gap: 0.5rem;
+      }
+    }
+    
+    /* Hero carousel enhancements */
+    .hero-carousel-wrapper {
+      position: relative;
+    }
+    
+    .hero-static-content {
+      position: absolute;
+      bottom: 80px;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+    
+    .hero-indicators {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 12px;
+      z-index: 10;
+    }
+    
+    .hero-indicators button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .hero-indicators button.active {
+      background: white;
+      transform: scale(1.2);
+    }
+    
+    .hero-slide-content {
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    .hero-title {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+    }
+    
+    .hero-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+    
+    .about-image-large, .about-small-image {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+    
+    .years-card {
+      background: white;
+      border-radius: 1rem;
+      text-align: center;
+      padding: 1.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  </style>
 </head>
 <body>
-  <div id="navbar"></div>
 
-  <main>
-    <section class="hero hero-carousel-wrapper">
-      <div id="heroCarousel" class="carousel carousel-fade hero-carousel" data-bs-interval="4000" data-bs-ride="carousel">
-        <!-- Carousel slides with rotating images and content -->
-        <div class="carousel-inner">
-          <!-- Slide 1 -->
-          <div class="carousel-item active" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.52), rgba(18, 41, 29, 0.72)), url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
-            <div class="hero-slide-content">
-              <p class="text-uppercase text-white-50 mb-3">Environmental restoration</p>
-              <h1 class="hero-title">Environment Restoration<br>and Healthy Living</h1>
-              <p class="hero-subtitle">Restoring nature, inspiring healthy living</p>
-            </div>
+<div id="navbar"></div>
+
+<main>
+  <!-- HERO CAROUSEL SECTION -->
+  <section class="hero hero-carousel-wrapper">
+    <div id="heroCarousel" class="carousel carousel-fade hero-carousel" data-bs-interval="4000" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.6), rgba(18, 41, 29, 0.75)), url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
+          <div class="hero-slide-content">
+            <p class=" text-white-50 mb-3">Restoring nature, inspiring healthy living</p>
+            <h1 class="hero-title">Environment Restoration<br>and Healthy Living</h1>
+            <!--<p class="hero-subtitle">Restoring nature, inspiring healthy living</p>-->
           </div>
-
-          <!-- Slide 2 -->
-          <div class="carousel-item" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.52), rgba(18, 41, 29, 0.72)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
-            <div class="hero-slide-content">
-              <p class="text-uppercase text-white-50 mb-3">Forest conservation</p>
-              <h1 class="hero-title">Protecting Our<br>Forests Together</h1>
-              <p class="hero-subtitle">Join in preserving vital ecosystems</p>
-            </div>
-          </div>
-
-          <!-- Slide 3 -->
-          <div class="carousel-item" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.52), rgba(18, 41, 29, 0.72)), url('https://images.unsplash.com/photo-1559027615-cd2628902d4a?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
-            <div class="hero-slide-content">
-              <p class="text-uppercase text-white-50 mb-3">Sustainable living</p>
-              <h1 class="hero-title">Building a Sustainable<br>Future for All</h1>
-              <p class="hero-subtitle">Innovative solutions for a greener planet</p>
-            </div>
-          </div>
-        </div>  
-
-        <!-- Carousel indicators -->
-        <div class="hero-indicators">
-          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
         </div>
-
-        <!-- Carousel controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
-      </div>
-
-      <!-- Static buttons overlay -->
-      <div class="hero-static-content">
-        <div class="hero-buttons">
-          <a href="about.html" class="btn btn-outline-light">Learn More</a>
-         <a href="get-involved.html" class="btn btn-success">Volunteer</a>
-
-
+        <div class="carousel-item" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.6), rgba(18, 41, 29, 0.75)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
+          <div class="hero-slide-content">
+            <p class="text-uppercase text-white-50 mb-3">Forest conservation</p>
+            <h1 class="hero-title">Protecting Our<br>Forests Together</h1>
+          </div>
+        </div>
+        <div class="carousel-item" style="background: linear-gradient(180deg, rgba(18, 41, 29, 0.6), rgba(18, 41, 29, 0.75)), url('https://images.unsplash.com/photo-1559027615-cd2628902d4a?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;">
+          <div class="hero-slide-content">
+            <p class="text-uppercase text-white-50 mb-3">Sustainable living</p>
+            <h1 class="hero-title">Building a Sustainable<br>Future for All</h1>
+            <p class="hero-subtitle">Innovative solutions for a greener planet</p>
+          </div>
         </div>
       </div>
-    </section>
+      
+      <div class="hero-indicators">
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+      </div>
+      
+      <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+    
+    <div class="hero-static-content">
+      <div class="hero-buttons text-center">
+        <a href="about.html" class="btn btn-outline-light btn-lg mx-2">Learn More</a>
+        <a href="get-involved.html" class="btn btn-success btn-lg mx-2">Volunteer</a>
+      </div>
+    </div>
+  </section>
 
-    <section id="about" class="section-wrapper">
-      <div class="container">
-        <div class="row align-items-start gy-4">
-          <div class="col-lg-6">
-            <div class="about-text">
-              <h2>About Us</h2>
-              <p>Environmental Restoration and Healthy Living (ERHL) is dedicated to restoring the natural environment and promoting healthy lifestyles through sustainable practices, organic agriculture, clean energy initiatives, and community education programs.</p>
-              <p>We believe that environmental health and human health are interconnected. Our work focuses on creating sustainable solutions that benefit both the planet and its inhabitants.</p>
-              <p>For over 5 years, we've been working on the frontlines of environmental conservation, partnering with communities to create lasting positive change. Our integrated approach combines environmental restoration with health advocacy to ensure holistic benefits for people and planet.</p>
-            </div>
+  <!-- ABOUT SECTION -->
+  <section id="about" class="section-wrapper">
+    <div class="container">
+      <div class="row align-items-start gy-4">
+        <div class="col-lg-6">
+          <div class="about-text">
+            <h2 data-aos="fade-right" class="text-center mb-4" style="color:#1f7d48;">About Us</h2>
+            <p data-aos="fade-left" data-aos-delay="100" style="text-align: justify; line-height: 1.7;">
+              Environmental Restoration and Healthy Living (ERHL) is dedicated to restoring the natural environment and promoting healthy lifestyles through sustainable practices, organic agriculture, clean energy initiatives, and community education programs.
+            </p>
+            <p data-aos="fade-up" data-aos-delay="300" style="text-align: justify; line-height: 1.7;">
+              We believe that environmental health and human health are interconnected. Our work focuses on creating sustainable solutions that benefit both the planet and its inhabitants.
+            </p>
+            <p data-aos="fade-up" data-aos-delay="500" style="text-align: justify; line-height: 1.7;">
+              For over 5 years, we've been working on the frontlines of environmental conservation, partnering with communities to create lasting positive change. Our integrated approach combines environmental restoration with health advocacy to ensure holistic benefits for people and planet.
+            </p>
           </div>
-          <div class="col-lg-6">
-            <div class="row gy-3">
-              <div class="col-12">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Forest restoration" class="about-image-large img-fluid rounded">
-              </div>
-              <div class="col-6">
-                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=400&q=80" alt="Organic farming" class="about-small-image img-fluid rounded">
-              </div>
-              <div class="col-6">
-                <div class="years-card">
-                  <span class="text-primary fw-bold fs-1">5+</span>
-                  <p class="mb-0">Years of Impact</p>
-                </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="row gy-3">
+            <div class="col-12">
+              <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=600&q=80" alt="Forest restoration" class="about-image-large img-fluid rounded">
+            </div>
+            <div class="col-6">
+              <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=400&q=80" alt="Organic farming" class="about-small-image img-fluid rounded">
+            </div>
+            <div class="col-6">
+              <div class="years-card">
+                <span class="text-primary fw-bold fs-1">5+</span>
+                <p class="mb-0">Years of Impact</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="values" class="bg-soft">
-      <div class="container section-wrapper">
-        <div class="section-title">
-          <h2>Our Core Values</h2>
-          <p>We are guided by principles that ensure our work creates lasting positive change</p>
-        </div>
-        <div class="values-carousel-container">
-          <button class="carousel-nav-btn carousel-nav-prev" id="valuesPrevBtn" aria-label="Previous values">❮</button>
-          <div class="values-carousel">
-            <div class="values-carousel-inner">
-              <div class="value-card">
-                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=200&q=80');"></div>
-                <h5>Sustainability</h5>
-                <p>We implement long-term solutions that preserve resources for future generations.</p>
-              </div>
-              <div class="value-card">
-                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=200&q=80');"></div>
-                <h5>Community</h5>
-                <p>We work closely with local communities to ensure our initiatives meet real needs.</p>
-              </div>
-              <div class="value-card">
-                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80');"></div>
-                <h5>Innovation</h5>
-                <p>We embrace new technologies and approaches to solve environmental challenges.</p>
-              </div>
-              <div class="value-card">
-                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=200&q=80');"></div>
-                <h5>Transparency</h5>
-                <p>We maintain open communication and accountability in all our operations and impact reporting.</p>
-              </div>
-              <div class="value-card">
-                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1427504494785-cddc0c6eabe0?auto=format&fit=crop&w=200&q=80');"></div>
-                <h5>Education</h5>
-                <p>We empower individuals through knowledge and skills to make informed environmental decisions.</p>
-              </div>
-              <div class="value-card">
-                <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1535492065543-7b964f97cd45?auto=format&fit=crop&w=200&q=80');"></div>
-                <h5>Health & Wellness</h5>
-                <p>We recognize that environmental health is directly connected to human wellbeing and quality of life.</p>
-              </div>
-            </div>
-          </div>
-          <button class="carousel-nav-btn carousel-nav-next" id="valuesNextBtn" aria-label="Next values">❯</button>
-        </div>
+  <!-- VALUES CAROUSEL SECTION -->
+  <section id="values" class="bg-soft py-5">
+    <div class="container">
+      <div class="section-title text-center mb-5">
+        <h2 style="color:#1f7d48;">Our Core Values</h2>
+        <p>We are guided by principles that ensure our work creates lasting positive change</p>
       </div>
-    </section>
-
-    <section id="projects" class="section-wrapper">
-      <div class="container">
-        <div class="section-title">
-          <h2>Featured Projects</h2>
-          <p>Explore some of our active environmental and health initiatives</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="project-buttons" id="projectButtonsContainer">
-              <button class="btn active" data-project="energy">Clean Energy Solutions</button>
-              <button class="btn" data-project="recycling">Waste Recycling Programs</button>
-              <button class="btn" data-project="planting">Tree Planting Campaigns</button>
-              <button class="btn" data-project="health">Health Promotion</button>
+      <div class="values-carousel-container">
+        <button class="carousel-nav-btn carousel-nav-prev" id="valuesPrevBtn">❮</button>
+        <div class="values-carousel">
+          <div class="values-carousel-inner" id="valuesCarouselInner">
+            <div class="value-card">
+              <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=200&q=80');"></div>
+              <h5>Sustainability</h5>
+              <p>We implement long-term solutions that preserve resources for future generations.</p>
+            </div>
+            <div class="value-card">
+              <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=200&q=80');"></div>
+              <h5>Community</h5>
+              <p>We work closely with local communities to ensure our initiatives meet real needs.</p>
+            </div>
+            <div class="value-card">
+              <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80');"></div>
+              <h5>Innovation</h5>
+              <p>We embrace new technologies and approaches to solve environmental challenges.</p>
+            </div>
+            <div class="value-card">
+              <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=200&q=80');"></div>
+              <h5>Transparency</h5>
+              <p>We maintain open communication and accountability in all our operations.</p>
+            </div>
+            <div class="value-card">
+              <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1427504494785-cddc0c6eabe0?auto=format&fit=crop&w=200&q=80');"></div>
+              <h5>Education</h5>
+              <p>We empower individuals through knowledge and skills to make informed decisions.</p>
+            </div>
+            <div class="value-card">
+              <div class="card-icon" style="background-image: url('https://images.unsplash.com/photo-1535492065543-7b964f97cd45?auto=format&fit=crop&w=200&q=80');"></div>
+              <h5>Health & Wellness</h5>
+              <p>We recognize that environmental health is directly connected to human wellbeing.</p>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="project-display">
-              <div class="project-image-container" id="projectImageContainer">
-                <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80" alt="Solar panels" class="project-image project-energy active" data-project="energy">
-                <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Recycling" class="project-image project-recycling" data-project="recycling">
-                <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80" alt="Tree planting" class="project-image project-planting" data-project="planting">
-                <img src="https://images.unsplash.com/photo-1576091160550-112173f31c77?auto=format&fit=crop&w=600&q=80" alt="Health promotion" class="project-image project-health" data-project="health">
-              </div>
-              <div class="project-description mt-4" id="projectDescriptionContainer">
-                <p class="project-desc project-energy-desc active">Our clean energy solutions focus on transitioning communities to renewable power sources. We install solar panels, conduct energy efficiency audits, and provide training on sustainable energy management.</p>
-                <p class="project-desc project-recycling-desc">We implement comprehensive waste management programs that include collection, sorting, and recycling initiatives. Our goal is to reduce landfill waste by 75% in partner communities.</p>
-                <p class="project-desc project-planting-desc">Through our tree planting campaigns, we've planted over 10,000 trees in the past three years. Each tree helps combat climate change and restore local ecosystems.</p>
-                <p class="project-desc project-health-desc">Our health promotion initiatives focus on preventative care, health education, and community wellness programs. We provide free health screenings and promote active lifestyles in underserved communities.</p>
-              </div>
-            </div>
-          </div>
         </div>
-        <div class="row gy-4 mt-4" id="projectCardsContainer">
-          <div class="col-12 text-center text-muted">Loading projects...</div>
-        </div>
+        <button class="carousel-nav-btn carousel-nav-next" id="valuesNextBtn">❯</button>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="cta-section">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-8">
-            <h2>Join Our Mission</h2>
-            <p>Be part of the change. Your involvement can make a real difference in restoring our environment and promoting healthy living.</p>
-            <div class="cta-buttons">
-              <a href="#contact" class="btn btn-primary">Volunteer</a>
-              <a href="#contact" class="btn btn-outline-light">Donate</a>
-            </div>
+  <!-- PROJECTS SECTION -->
+  <section id="projects" class="section-wrapper">
+    <div class="container">
+      <div class="section-title text-center mb-5">
+        <h2 style="color:#1f7d48;">Featured Projects</h2>
+        <p>Explore some of our active environmental and health initiatives</p>
+      </div>
+      <div class="row">
+        <div class="col-lg-5">
+          <div class="project-buttons" id="projectButtonsContainer">
+            <button class="btn active" data-project="energy">🌞 Clean Energy Solutions</button>
+            <button class="btn" data-project="recycling">♻️ Waste Recycling Programs</button>
+            <button class="btn" data-project="planting">🌳 Tree Planting Campaigns</button>
+            <button class="btn" data-project="health">❤️ Health Promotion</button>
           </div>
-          <div class="col-lg-4">
-            <div class="cta-banner">
-              <h3>Impact Statistics</h3>
-              <p>500+ Trees Planted<br>10 Communities Served<br>50% Waste Reduction</p>
+        </div>
+        <div class="col-lg-7">
+          <div class="project-display">
+            <div class="project-image-container" id="projectImageContainer">
+              <img src="https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=600&q=80" alt="Solar panels" class="project-image active" data-project="energy">
+              <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=600&q=80" alt="Recycling" class="project-image" data-project="recycling">
+              <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=600&q=80" alt="Tree planting" class="project-image" data-project="planting">
+              <img src="https://images.unsplash.com/photo-1576091160550-112173f31c77?auto=format&fit=crop&w=600&q=80" alt="Health promotion" class="project-image" data-project="health">
+            </div>
+            <div class="project-description mt-4" id="projectDescriptionContainer">
+              <p class="project-desc active" data-project="energy">Our clean energy solutions focus on transitioning communities to renewable power sources. We install solar panels, conduct energy efficiency audits, and provide training on sustainable energy management.</p>
+              <p class="project-desc" data-project="recycling">We implement comprehensive waste management programs that include collection, sorting, and recycling initiatives. Our goal is to reduce landfill waste by 75% in partner communities.</p>
+              <p class="project-desc" data-project="planting">Through our tree planting campaigns, we've planted over 10,000 trees in the past three years. Each tree helps combat climate change and restore local ecosystems.</p>
+              <p class="project-desc" data-project="health">Our health promotion initiatives focus on preventative care, health education, and community wellness programs. We provide free health screenings and promote active lifestyles in underserved communities.</p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+      <div class="row gy-4 mt-4" id="projectCardsContainer"></div>
+    </div>
+  </section>
 
-    <section id="news" class="section-wrapper">
-      <div class="container">
-        <div class="section-title">
-          <h2>Latest News</h2>
-          <p>Stay updated with our recent activities and achievements</p>
+  <!-- CTA SECTION -->
+  <section class="cta-section py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h2>Join Our Mission</h2>
+          <p>Be part of the change. Your involvement can make a real difference in restoring our environment and promoting healthy living.</p>
+          <div class="cta-buttons">
+            <a href="#contact" class="btn btn-primary">Volunteer</a>
+            <a href="#contact" class="btn btn-outline-light">Donate</a>
+          </div>
         </div>
-        <div class="news-grid" id="newsCardsContainer">
-          <div class="col-12 text-center text-muted">Loading news articles...</div>
+        <div class="col-lg-4">
+          <div class="cta-banner bg-white rounded-4 p-4 text-center shadow">
+            <h3 class="text-success">Impact Statistics</h3>
+            <p><strong>10,000+</strong> Trees Planted<br>
+            <strong>15+</strong> Communities Served<br>
+            <strong>50%</strong> Waste Reduction</p>
+          </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="contact" class="section-wrapper">
-      <div class="container">
-        <div class="section-title">
-          <h2>Contact Us</h2>
-          <p>Get in touch to learn more about our work or how you can get involved</p>
+  <!-- NEWS SECTION -->
+  <section id="news" class="section-wrapper">
+    <div class="container">
+      <div class="section-title text-center mb-5">
+        <h2 style="color:#1f7d48;">Latest News</h2>
+        <p>Stay updated with our recent activities and achievements</p>
+      </div>
+      <div class="news-grid" id="newsCardsContainer"></div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact" class="section-wrapper bg-light">
+    <div class="container">
+      <div class="section-title text-center mb-5">
+        <h2 style="color:#1f7d48;">Contact Us</h2>
+        <p>Get in touch to learn more about our work or how you can get involved</p>
+      </div>
+      <div class="row gy-4">
+        <div class="col-lg-6">
+          <form id="contactForm">
+            <div class="mb-3">
+              <input type="text" class="form-control" id="contactName" placeholder="Your Name" required>
+            </div>
+            <div class="mb-3">
+              <input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required>
+            </div>
+            <div class="mb-3">
+              <textarea class="form-control" id="contactMessage" rows="4" placeholder="Your Message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-success px-4 py-2">Send Message <i class="fas fa-paper-plane ms-2"></i></button>
+          </form>
         </div>
-        <div class="row gy-4">
-          <div class="col-lg-6">
-            <form id="contactForm">
-              <div class="mb-3">
-                <input type="text" class="form-control" id="contactName" placeholder="Your Name" required>
-              </div>
-              <div class="mb-3">
-                <input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required>
-              </div>
-              <div class="mb-3">
-                <textarea class="form-control" id="contactMessage" rows="4" placeholder="Your Message" required></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary">Send Message</button>
-            </form>
-          </div>
-          <div class="col-lg-6">
-            <div class="contact-info">
-              <p><strong>Address:</strong> 123 Green Street, Eco City, EC 12345</p>
-              <p><strong>Phone:</strong> +265 997261596</p>
-              <p><strong>Email:</strong> info@erhl.org</p>
-              <p><strong>Hours:</strong> Monday - Friday, 9 AM - 5 PM</p>
+        <div class="col-lg-6">
+          <div class="contact-info">
+            <p><i class="fas fa-map-marker-alt me-3"></i> <strong>Address:</strong> Lilongwe, Malawi</p>
+            <p><i class="fas fa-phone me-3"></i> <strong>Phone:</strong> +265 997 261 596</p>
+            <p><i class="fas fa-envelope me-3"></i> <strong>Email:</strong> info@erhl.org</p>
+            <p><i class="fas fa-clock me-3"></i> <strong>Hours:</strong> Monday - Friday, 9 AM - 5 PM</p>
+            <div class="social-links mt-4">
+              <a href="#" class="social-icon me-2"><i class="fab fa-facebook-f"></i></a>
+              <a href="#" class="social-icon me-2"><i class="fab fa-twitter"></i></a>
+              <a href="#" class="social-icon me-2"><i class="fab fa-instagram"></i></a>
+              <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
             </div>
           </div>
         </div>
       </div>
-    </section>
-  </main>
+    </div>
+  </section>
+</main>
 
-  <div id="footer"></div>
+<div id="footer"></div>
 
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="assets/js/main.js"></script>
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script type="module" src="assets/js/main.js"></script>
+
+<script>
+  // Initialize AOS
+  AOS.init({ duration: 800, once: true, offset: 60 });
+  
+  // ========== PROJECT DATA ==========
+  const projectsData = [
+    { title: "Solar Installation in Mulanje", description: "Installed solar panels for 50 households, providing clean energy access.", image: "https://images.unsplash.com/photo-1466611653911-95081537e5b7?auto=format&fit=crop&w=400&q=80" },
+    { title: "Community Recycling Hub", description: "Opened recycling center serving 2000+ residents, creating jobs.", image: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?auto=format&fit=crop&w=400&q=80" },
+    { title: "Tree Planting Drive", description: "Planted 1000 trees with local schools to restore green spaces.", image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=400&q=80" }
+  ];
+  
+  // Populate project cards
+  const projectCardsContainer = document.getElementById('projectCardsContainer');
+  if (projectCardsContainer) {
+    projectCardsContainer.innerHTML = projectsData.map(project => `
+      <div class="col-md-4">
+        <div class="project-card">
+          <img src="${project.image}" alt="${project.title}">
+          <div class="project-card-body">
+            <h4>${project.title}</h4>
+            <p>${project.description}</p>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  // ========== NEWS DATA ==========
+  const newsData = [
+    { title: "ERHL Wins Environmental Award", date: "March 15, 2025", summary: "Recognized for outstanding contribution to forest restoration.", fullText: "ERHL received the Green Future Award for planting over 10,000 trees in the past year, significantly impacting local biodiversity." },
+    { title: "New Recycling Initiative Launched", date: "February 28, 2025", summary: "Partnership with local businesses to reduce plastic waste.", fullText: "The program aims to recycle 5 tons of plastic monthly while creating sustainable jobs for community members." },
+    { title: "Health Fair Success", date: "February 10, 2025", summary: "Over 500 community members received free health screenings.", fullText: "Services included blood pressure, diabetes testing, and nutrition counseling, with follow-up care arranged for those in need." }
+  ];
+  
+  const newsContainer = document.getElementById('newsCardsContainer');
+  if (newsContainer) {
+    newsContainer.innerHTML = newsData.map((news, idx) => `
+      <div class="news-card">
+        <img src="https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=400&q=80" alt="${news.title}">
+        <div class="news-body">
+          <h6>${news.title}</h6>
+          <span class="news-date"><i class="far fa-calendar-alt me-1"></i> ${news.date}</span>
+          <p>${news.summary}</p>
+          <button class="read-more-btn" onclick="this.nextElementSibling.style.display='block'; this.style.display='none'">Read More →</button>
+          <div class="news-full-text"><p>${news.fullText}</p></div>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  // ========== PROJECT IMAGE SWITCHER ==========
+  const projectBtns = document.querySelectorAll('.project-buttons .btn');
+  const projectImages = document.querySelectorAll('.project-image');
+  const projectDescs = document.querySelectorAll('.project-desc');
+  
+  function activateProject(projectId) {
+    projectImages.forEach(img => {
+      img.classList.remove('active');
+      if (img.dataset.project === projectId) img.classList.add('active');
+    });
+    projectDescs.forEach(desc => {
+      desc.classList.remove('active');
+      if (desc.dataset.project === projectId) desc.classList.add('active');
+    });
+    projectBtns.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.project === projectId) btn.classList.add('active');
+    });
+  }
+  
+  projectBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const projectId = btn.dataset.project;
+      if (projectId) activateProject(projectId);
+    });
+  });
+  
+  // ========== VALUES CAROUSEL ==========
+  const valuesInner = document.getElementById('valuesCarouselInner');
+  const prevBtn = document.getElementById('valuesPrevBtn');
+  const nextBtn = document.getElementById('valuesNextBtn');
+  
+  if (valuesInner && prevBtn && nextBtn) {
+    let currentPosition = 0;
+    let cardsPerView = 2;
+    const totalCards = document.querySelectorAll('.value-card').length;
+    
+    function updateCardsPerView() {
+      cardsPerView = window.innerWidth < 768 ? 1 : 2;
+      return cardsPerView;
+    }
+    
+    function updateCarousel() {
+      updateCardsPerView();
+      const maxPosition = Math.max(0, totalCards - cardsPerView);
+      if (currentPosition > maxPosition) currentPosition = maxPosition;
+      const cardWidth = document.querySelector('.value-card')?.offsetWidth || 320;
+      const gap = 24;
+      const translateValue = currentPosition * (cardWidth + gap);
+      valuesInner.style.transform = `translateX(-${translateValue}px)`;
+    }
+    
+    nextBtn.addEventListener('click', () => {
+      updateCardsPerView();
+      const maxPosition = Math.max(0, totalCards - cardsPerView);
+      if (currentPosition < maxPosition) {
+        currentPosition++;
+        updateCarousel();
+      }
+    });
+    
+    prevBtn.addEventListener('click', () => {
+      if (currentPosition > 0) {
+        currentPosition--;
+        updateCarousel();
+      }
+    });
+    
+    window.addEventListener('resize', () => {
+      currentPosition = 0;
+      updateCarousel();
+    });
+    
+    setTimeout(updateCarousel, 100);
+  }
+  
+  // ========== CONTACT FORM ==========
+  const contactForm = document.getElementById('contactForm');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const message = document.getElementById('contactMessage').value;
+      
+      if (name && email && message) {
+        alert(`Thank you ${name}! We'll get back to you within 48 hours.`);
+        contactForm.reset();
+      } else {
+        alert('Please fill in all fields.');
+      }
+    });
+  }
+</script>
 </body>
 </html>
