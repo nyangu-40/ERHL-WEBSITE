@@ -1,5 +1,5 @@
-/* PAGE TRANSITIONS */
-@keyframes fadeIn {
+PAGE TRANSITIONS */
+/*@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(10px);
