@@ -567,19 +567,20 @@ a {
 
 .values-carousel {
   overflow: hidden;
+  padding: 2rem 0;
 }
 
 .values-carousel-inner {
   display: flex;
   gap: 1.5rem;
-  align-items: stretch;
+  align-items: center;
   will-change: transform;
   padding-bottom: 4px;
-  width: max-content;
 }
 
 .values-carousel-inner .value-card {
-  flex: 0 0 calc(50% - 0.75rem);
+  flex: 0 0 360px;
+  max-width: 360px;
   box-sizing: border-box;
 }
 
@@ -588,16 +589,17 @@ a {
   top: 50%;
   transform: translateY(-50%);
   z-index: 3;
-  background: rgba(255,255,255,0.06);
-  border: none;
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
+  background: rgba(255,255,255,0.96);
+  border: 2px solid #1f7d48;
+  color: #1f7d48;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  box-shadow: 0 12px 26px rgba(0,0,0,0.18);
 }
 
 .carousel-nav-prev { left: 0; }
@@ -611,36 +613,46 @@ a {
 }
 
 .value-card {
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 2rem 1.5rem;
-  background: white;
-  color: var(--text);
-  text-align: center;
-   border: 1px solid rgba(31,125,72,0.12);
-   box-shadow: 0 20px 40px rgba(31,125,72,0.08);
+   min-height: 360px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: flex-start;
+   padding: 2.5rem 1.75rem;
+   background: white;
+   color: var(--text);
+   text-align: center;
+   border: 1px solid rgba(31,125,72,0.14);
+   box-shadow: 0 25px 60px rgba(31,125,72,0.12);
+   border-radius: 2rem;
    position: relative;
  }
  
- .value-card .card-badge {
-   display: inline-flex;
-   align-items: center;
-   justify-content: center;
-   padding: 0.35rem 0.9rem;
-   border-radius: 999px;
-   background: rgba(91,181,111,0.12);
+ .value-card .card-icon {
+   width: 120px;
+   height: 120px;
+   border-radius: 50%;
+   background-size: cover;
+   background-position: center;
+   margin-bottom: 1.25rem;
+   border: 4px solid #fff;
+   box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+ }
+ 
+ .value-card h5 {
    color: var(--primary);
-   font-size: 0.82rem;
+   font-size: 1.4rem;
+   margin-bottom: 0.8rem;
    font-weight: 700;
-   letter-spacing: 0.06em;
-   text-transform: uppercase;
-   margin-bottom: 1rem;
-  box-shadow: 0 14px 30px rgba(0,0,0,0.08);
-}
-
+ }
+ 
+ .value-card p {
+   color: #425249;
+   font-size: 1rem;
+   line-height: 1.75;
+   margin: 0;
+   max-width: 95%;
+ }
 .value-card:hover,
 .project-card:hover,
 .blog-card:hover {

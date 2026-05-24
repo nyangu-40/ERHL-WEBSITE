@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let visibleWidth = 0;
     let maxOffset = 0;
     let rafId = null;
-    const speed = 0.18; // slow motion pixels per frame
+    const speed = 1.2; // faster slow motion pixels per frame
 
     function updateCarousel() {
       valuesCarouselInner.style.transform = `translateX(${offset}px)`;
