@@ -74,78 +74,80 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (valuesPrevBtn && valuesNextBtn && valueCards.length > 0) {
     let currentIndex = 0;
+    let offset = 0;
+    let direction = -1;
+    let cardsPerView = 0;
+    let maxIndex = 0;
+    let maxOffset = 0;
+    let gap = 24;
+    let cardWidth = 0;
+    let visibleWidth = 0;
+    let rafId = null;
+    const speed = 0.24; // speed in pixels per frame for slow motion
 
     function getCardsPerView() {
       return window.innerWidth > 768 ? 2 : 1;
     }
 
-    let cardsPerView = getCardsPerView();
-    let maxIndex = Math.max(0, valueCards.length - cardsPerView);
+    function recalcDimensions() {
+      cardsPerView = getCardsPerView();
+      maxIndex = Math.max(0, valueCards.length - cardsPerView);
+      const style = window.getComputedStyle(valuesCarouselInner);
+      gap = parseFloat(style.gap) || 24;
+      cardWidth = valueCards[0].getBoundingClientRect().width;
+      visibleWidth = valuesCarouselInner.parentElement.clientWidth;
+      maxOffset = Math.max(0, valueCards.length * cardWidth + (valueCards.length - 1) * gap - visibleWidth);
+      if (offset < -maxOffset) offset = -maxOffset;
+      if (offset > 0) offset = 0;
+    }
 
     function updateCarousel() {
-      // compute gap and card width dynamically
-      const style = window.getComputedStyle(valuesCarouselInner);
-      const gap = parseFloat(style.gap) || 24;
-      const cardRect = valueCards[0].getBoundingClientRect();
-      const cardWidth = cardRect.width;
-      const offset = -(currentIndex * (cardWidth + gap));
       valuesCarouselInner.style.transform = `translateX(${offset}px)`;
     }
 
-    function resetAutoCycle() {
-      clearInterval(autoCycleTimer);
-      autoCycleTimer = setInterval(() => {
-        currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
-        updateCarousel();
-      }, 5200);
+    function setIndex(index) {
+      currentIndex = Math.min(maxIndex, Math.max(0, index));
+      offset = -Math.min(maxOffset, currentIndex * (cardWidth + gap));
+      updateCarousel();
     }
 
     valuesPrevBtn.addEventListener('click', function() {
       if (currentIndex > 0) {
-        currentIndex--;
-        updateCarousel();
-        resetAutoCycle();
+        setIndex(currentIndex - 1);
+        direction = -1;
       }
     });
 
     valuesNextBtn.addEventListener('click', function() {
       if (currentIndex < maxIndex) {
-        currentIndex++;
-        updateCarousel();
-        resetAutoCycle();
+        setIndex(currentIndex + 1);
+        direction = 1;
       }
     });
 
-    // Auto-scroll carousel when the section is visible and when scrolling
-    const valuesSection = document.getElementById('values');
-    function updateCarouselOnScroll() {
-      if (!valuesSection) return;
-      const rect = valuesSection.getBoundingClientRect();
-      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
-
-      const visibleRatio = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
-      const newIndex = Math.floor(visibleRatio * (maxIndex + 1));
-      const bounded = Math.min(maxIndex, Math.max(0, newIndex));
-      if (bounded !== currentIndex) {
-        currentIndex = bounded;
+    function animateCarousel() {
+      if (maxOffset > 0) {
+        offset += direction * speed;
+        if (offset <= -maxOffset) {
+          offset = -maxOffset;
+          direction = 1;
+        } else if (offset >= 0) {
+          offset = 0;
+          direction = -1;
+        }
         updateCarousel();
       }
+      rafId = requestAnimationFrame(animateCarousel);
     }
 
-    window.addEventListener('scroll', updateCarouselOnScroll, { passive: true });
-
-    // Update on resize
     window.addEventListener('resize', function() {
-      cardsPerView = getCardsPerView();
-      maxIndex = Math.max(0, valueCards.length - cardsPerView);
-      if (currentIndex > maxIndex) currentIndex = maxIndex;
-      updateCarousel();
+      recalcDimensions();
+      setIndex(currentIndex);
     });
 
-    let autoCycleTimer = null;
-    resetAutoCycle();
-    // initial layout
-    setTimeout(updateCarousel, 60);
+    recalcDimensions();
+    setIndex(0);
+    rafId = requestAnimationFrame(animateCarousel);
   }
 
   // Load public content from Firestore
