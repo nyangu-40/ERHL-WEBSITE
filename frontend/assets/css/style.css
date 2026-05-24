@@ -560,6 +560,56 @@ a {
   overflow: hidden;
 }
 
+/* VALUES CAROUSEL: layout and navigation */
+.values-carousel-container {
+  position: relative;
+}
+
+.values-carousel {
+  overflow: hidden;
+}
+
+.values-carousel-inner {
+  display: flex;
+  gap: 1.5rem;
+  align-items: stretch;
+  transition: transform 0.45s ease;
+  will-change: transform;
+  padding-bottom: 4px; /* ensure little breathing room */
+}
+
+.values-carousel-inner .value-card {
+  flex: 0 0 calc(50% - 0.75rem);
+  box-sizing: border-box;
+}
+
+.carousel-nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  background: rgba(255,255,255,0.06);
+  border: none;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.carousel-nav-prev { left: 0; }
+.carousel-nav-next { right: 0; }
+
+@media (max-width: 768px) {
+  .values-carousel-inner .value-card {
+    flex: 0 0 100%;
+  }
+  .carousel-nav-btn { width: 34px; height: 34px; }
+}
+
 .value-card {
   min-height: 320px;
   display: flex;
