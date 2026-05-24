@@ -74,13 +74,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (valuesPrevBtn && valuesNextBtn && valueCards.length > 0) {
     let currentIndex = 0;
-    const cardsPerView = window.innerWidth > 768 ? 2 : 1;
-    const maxIndex = Math.max(0, valueCards.length - cardsPerView);
+
+    function getCardsPerView() {
+      return window.innerWidth > 768 ? 2 : 1;
+    }
+
+    let cardsPerView = getCardsPerView();
+    let maxIndex = Math.max(0, valueCards.length - cardsPerView);
 
     function updateCarousel() {
-      const gap = 24; // 1.5rem in pixels
-      const cardWidth = valuesCarouselInner.offsetWidth / valueCards.length;
-      const offset = -(currentIndex * (cardWidth + gap / 2));
+      // compute gap and card width dynamically
+      const style = window.getComputedStyle(valuesCarouselInner);
+      const gap = parseFloat(style.gap) || 24;
+      const cardRect = valueCards[0].getBoundingClientRect();
+      const cardWidth = cardRect.width;
+      const offset = -(currentIndex * (cardWidth + gap));
       valuesCarouselInner.style.transform = `translateX(${offset}px)`;
     }
 
@@ -101,16 +109,24 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-scroll carousel based on page scroll
     window.addEventListener('scroll', function() {
       const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      // Advance carousel every 25% of page scroll
-      const newIndex = Math.floor((scrollPercentage / 25)) % (maxIndex + 1);
-      if (newIndex !== currentIndex) {
-        currentIndex = newIndex;
+      const newIndex = Math.floor((scrollPercentage / 25));
+      const bounded = Math.min(maxIndex, Math.max(0, newIndex));
+      if (bounded !== currentIndex) {
+        currentIndex = bounded;
         updateCarousel();
       }
     });
 
     // Update on resize
-    window.addEventListener('resize', updateCarousel);
+    window.addEventListener('resize', function() {
+      cardsPerView = getCardsPerView();
+      maxIndex = Math.max(0, valueCards.length - cardsPerView);
+      if (currentIndex > maxIndex) currentIndex = maxIndex;
+      updateCarousel();
+    });
+
+    // initial layout
+    setTimeout(updateCarousel, 60);
   }
 
   // Load public content from Firestore
