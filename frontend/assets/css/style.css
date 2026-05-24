@@ -620,17 +620,24 @@ a {
   background: white;
   color: var(--text);
   text-align: center;
-  box-shadow: 0 18px 40px rgba(0,0,0,0.08);
-}
-
-.value-card .card-icon {
-  width: 140px;
-  height: 120px;
-  border-radius: 0;
-  background-size: cover;
-  background-position: center;
-  background-color: #f3fcf1;
-  margin-bottom: 1.5rem;
+   border: 1px solid rgba(31,125,72,0.12);
+   box-shadow: 0 20px 40px rgba(31,125,72,0.08);
+   position: relative;
+ }
+ 
+ .value-card .card-badge {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   padding: 0.35rem 0.9rem;
+   border-radius: 999px;
+   background: rgba(91,181,111,0.12);
+   color: var(--primary);
+   font-size: 0.82rem;
+   font-weight: 700;
+   letter-spacing: 0.06em;
+   text-transform: uppercase;
+   margin-bottom: 1rem;
   box-shadow: 0 14px 30px rgba(0,0,0,0.08);
 }
 
