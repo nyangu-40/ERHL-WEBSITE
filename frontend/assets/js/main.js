@@ -92,10 +92,19 @@ document.addEventListener('DOMContentLoaded', function() {
       valuesCarouselInner.style.transform = `translateX(${offset}px)`;
     }
 
+    function resetAutoCycle() {
+      clearInterval(autoCycleTimer);
+      autoCycleTimer = setInterval(() => {
+        currentIndex = currentIndex < maxIndex ? currentIndex + 1 : 0;
+        updateCarousel();
+      }, 5200);
+    }
+
     valuesPrevBtn.addEventListener('click', function() {
       if (currentIndex > 0) {
         currentIndex--;
         updateCarousel();
+        resetAutoCycle();
       }
     });
 
@@ -103,19 +112,27 @@ document.addEventListener('DOMContentLoaded', function() {
       if (currentIndex < maxIndex) {
         currentIndex++;
         updateCarousel();
+        resetAutoCycle();
       }
     });
 
-    // Auto-scroll carousel based on page scroll
-    window.addEventListener('scroll', function() {
-      const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-      const newIndex = Math.floor((scrollPercentage / 25));
+    // Auto-scroll carousel when the section is visible and when scrolling
+    const valuesSection = document.getElementById('values');
+    function updateCarouselOnScroll() {
+      if (!valuesSection) return;
+      const rect = valuesSection.getBoundingClientRect();
+      if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+
+      const visibleRatio = Math.min(1, Math.max(0, (window.innerHeight - rect.top) / (window.innerHeight + rect.height)));
+      const newIndex = Math.floor(visibleRatio * (maxIndex + 1));
       const bounded = Math.min(maxIndex, Math.max(0, newIndex));
       if (bounded !== currentIndex) {
         currentIndex = bounded;
         updateCarousel();
       }
-    });
+    }
+
+    window.addEventListener('scroll', updateCarouselOnScroll, { passive: true });
 
     // Update on resize
     window.addEventListener('resize', function() {
@@ -125,6 +142,8 @@ document.addEventListener('DOMContentLoaded', function() {
       updateCarousel();
     });
 
+    let autoCycleTimer = null;
+    resetAutoCycle();
     // initial layout
     setTimeout(updateCarousel, 60);
   }
