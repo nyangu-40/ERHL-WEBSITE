@@ -573,7 +573,15 @@ a {
   display: flex;
   gap: 1.5rem;
   align-items: stretch;
+  will-change: transform;
+  padding-bottom: 4px;
+  width: max-content;
+}
 
+.values-carousel-inner .value-card {
+  flex: 0 0 calc(50% - 0.75rem);
+  box-sizing: border-box;
+}
 
 .carousel-nav-btn {
   position: absolute;

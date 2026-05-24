@@ -73,56 +73,40 @@ document.addEventListener('DOMContentLoaded', function() {
   const valueCards = document.querySelectorAll('.values-carousel-inner .value-card');
 
   if (valuesPrevBtn && valuesNextBtn && valueCards.length > 0) {
-    let currentIndex = 0;
     let offset = 0;
     let direction = -1;
-    let cardsPerView = 0;
-    let maxIndex = 0;
-    let maxOffset = 0;
     let gap = 24;
     let cardWidth = 0;
     let visibleWidth = 0;
+    let maxOffset = 0;
     let rafId = null;
-    const speed = 0.24; // speed in pixels per frame for slow motion
-
-    function getCardsPerView() {
-      return window.innerWidth > 768 ? 2 : 1;
-    }
-
-    function recalcDimensions() {
-      cardsPerView = getCardsPerView();
-      maxIndex = Math.max(0, valueCards.length - cardsPerView);
-      const style = window.getComputedStyle(valuesCarouselInner);
-      gap = parseFloat(style.gap) || 24;
-      cardWidth = valueCards[0].getBoundingClientRect().width;
-      visibleWidth = valuesCarouselInner.parentElement.clientWidth;
-      maxOffset = Math.max(0, valueCards.length * cardWidth + (valueCards.length - 1) * gap - visibleWidth);
-      if (offset < -maxOffset) offset = -maxOffset;
-      if (offset > 0) offset = 0;
-    }
+    const speed = 0.18; // slow motion pixels per frame
 
     function updateCarousel() {
       valuesCarouselInner.style.transform = `translateX(${offset}px)`;
     }
-
-    function setIndex(index) {
-      currentIndex = Math.min(maxIndex, Math.max(0, index));
-      offset = -Math.min(maxOffset, currentIndex * (cardWidth + gap));
+    function recalcDimensions() {
+      const style = window.getComputedStyle(valuesCarouselInner);
+      gap = parseFloat(style.gap) || 24;
+      cardWidth = valueCards[0].getBoundingClientRect().width;
+      visibleWidth = valuesCarouselInner.parentElement.clientWidth;
+      const totalWidth = valueCards.length * cardWidth + (valueCards.length - 1) * gap;
+      maxOffset = Math.max(0, totalWidth - visibleWidth);
+      if (offset < -maxOffset) offset = -maxOffset;
+      if (offset > 0) offset = 0;
       updateCarousel();
     }
 
     valuesPrevBtn.addEventListener('click', function() {
-      if (currentIndex > 0) {
-        setIndex(currentIndex - 1);
-        direction = -1;
-      }
+      offset = Math.min(offset + cardWidth + gap, 0);
+      direction = -1;
+      updateCarousel();
     });
 
     valuesNextBtn.addEventListener('click', function() {
-      if (currentIndex < maxIndex) {
-        setIndex(currentIndex + 1);
-        direction = 1;
-      }
+      offset = Math.max(offset - cardWidth - gap, -maxOffset);
+      direction = 1;
+      updateCarousel();
     });
 
     function animateCarousel() {
@@ -142,11 +126,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     window.addEventListener('resize', function() {
       recalcDimensions();
-      setIndex(currentIndex);
     });
 
     recalcDimensions();
-    setIndex(0);
+    offset = 0;
     rafId = requestAnimationFrame(animateCarousel);
   }
 
